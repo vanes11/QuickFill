@@ -1,0 +1,22 @@
+NumTok;[0-9]+
+AlphTok;[A-Za-z]+
+UpperTok;[A-Z]+
+LowerTok;[a-z]+
+AlphNumTok;[A-Za-z0-9]+
+HyphenTok;-
+NonDigitTok;[^0-9]
+NonAlphtok;[^A-Za-z]
+SpaceTok;[ \t\n\r\f\v]
+DotTok;\.
+ColonTok;:
+CommaTok;,
+BackSlashTok;\\
+ForwardSlashTok;\/
+LeftparenthesisTok;\)
+RightParenthesisTok;\) 
+LeftBracketTok;\{ 
+RightBraketTok;\}
+NonspaceTok;[^ \t\n\r\f\v]
+Epsilon;ϵ
+StartTok;^.{1,1}
+EndTok;.{1,1}$
