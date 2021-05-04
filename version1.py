@@ -7,6 +7,8 @@ import re
 BOTTOM =  "⊥"
 
 
+""" 1) **** definition de la classe  C de Tokens utiliser dans les primitives de notre langage **** """
+
 
 def GetClassC():
     """
@@ -27,6 +29,10 @@ def GetClassC():
 ClasseC = GetClassC()
 
 
+
+""" 2) **** Definition des primitives de baseses **** """
+
+
 def Cpos(s,k):
     if(k>= 0):
         return k
@@ -34,7 +40,8 @@ def Cpos(s,k):
         return len(s) + k
 
 
-cpos = Cpos("laure", -1)
+#cpos = Cpos("laure", -1)
+#print(cpos)
 
 
 def TokenSeq(*tokens):
@@ -43,6 +50,7 @@ def TokenSeq(*tokens):
     for token in tokens:
         TokenSeqResult = TokenSeqResult+token
     return TokenSeqResult
+
 
 
 def Pos(s,r1,r2,c):
@@ -115,8 +123,8 @@ def GenerateRegularExpressionLeft(s,k):
 
 def GenerateRegularExpressionRigth(s,k):
     
-    """ Retourne l'ensemble des expressions regulieres qui existennt dans  s[k1:k] 
-    pour k1 variant de 0 a k-1 """
+    """ Retourne l'ensemble des expressions regulieres qui existennt dans  s[k:k2] 
+    pour k2 variant de k a len(s) """
    
     k1 = k
     r1 = []
@@ -159,6 +167,9 @@ def MatchExpression(l,s):
         return 0
 
 
+""" 3)*** implementation de GeneratePostion, cette fonction s'appuie sur les precedentes **** """
+
+
 
 def GeneratePosition(s,k):
      
@@ -171,13 +182,8 @@ def GeneratePosition(s,k):
     POsList.append(PosChain)
     PosChain = "Cpos("+s+",-"+str((len(s)-k))+")"
     POsList.append(PosChain)
-    #print(result)
     R1List = GenerateRegularExpressionLeft(s,k)
-    #print(R1List)
-    #print("****")
     R2List = GenerateRegularExpressionRigth(s,k)
-   
-    #print(R2List)
 
     for r1 in R1List :
         for r2 in R2List :
@@ -198,13 +204,83 @@ def GeneratePosition(s,k):
 
     return result,set(POsList)
          
-positions,poslist = GeneratePosition("425-706-7709",4)
+""" positions,poslist = GeneratePosition("425-706-7709",7)
 print(positions)
-print(poslist)
+print(poslist) """
 
 
 
-def GenerateSubstring(entre,s):
-    """  """
-    result = {}
+
+def SubStr(s,p1,p2):
+    """ 
+    Expression de sous chaine tel que formuler dans l'article, un peu != de celle de python.l'indexation commence a 0
+    """
+    p2 = p2+1
+    return s[p1:p2]
+
+
+
+
+def SubStrs(s,p1,p2):
+    """
+    p1 et ps sont les ensemble de positions 
+    """
+    SubList = []  # pour affichage
+    SubChain = ""
+    for i in p1:
+        for j in  p2:
+            #result = result.union(set([SubStr(s,i,j)])) # ce ci n'est pertinent que lorsque l'ensemble p1 tout comme p2
+            # represente les valeurs diff, ce qui n'est pas le cas pour nous
+            #SubChain = "SubStr("+s+","+str(i)+","+str(j)+")"
+            SubChain = "SubStr("+s+","+i+","+j+")"# pour  le formatage, on laisse i et j pour avoir les expressions pos et cpos
+            SubList.append(SubChain)
+    
+    return set(SubList)
+
+
+""" x, test = SubStrs("425-706-7709",{"Pos(HyphenTok,NumTok,1)"},{"cpos(2)","Pos(NumTok, TokenSeq(HyphenTok,NumTok),2)"})
+print(x)
+print(test) """
+
+
+""" 4) **** Implementation de GenerateSubstring, fonction principale de GenerateStr *** """
+
+
+def GenerateSubstring(entree,s):
+    """ 
+    Pour un etat d'entree sigma et une sortir s, cette fonction retourne l'ensemble des expressions Substr() 
+    de notre langage qui permette d'obtenir d'extraire la chaine s dans l'entree sigma.
+    l'etat d'entree sigma est un dictionnaire : les cle sont  vi et les valeurs sont des chaine de caracteres.
+    ---------
+    Ce qui nous interesse c'est l'affichage avec les expression pos et cpos, car la valeur est unique.
+    """
+    result = set()
+    for cle in entree:
+        # cle = vi, nom de colonne
+        if s in entree[cle]:
+            k = entree[cle].index(s)
+            
+            k1 = len(s)+k-1
+            Y1 = GeneratePosition(entree[cle],k)
+            Y1 = Y1[1] # je ne comprend pas pourquoi Y1 et Y2 sont des tuplets d'ensemble
+            print("valeur de Y1: ",Y1)
+            Y2 = GeneratePosition(entree[cle], k1)
+            print("valeur de Y2: ",Y2[1])
+            Y2 = Y2[1] # je ne comprend pas pourquoi Y1 et Y2 sont des tuplets d'ensemble
+            SubResult = SubStrs(entree[cle],Y1,Y2) # le resultat de Substrs est deja un set
+            
+            print("Result final: ",SubResult)
+            result = result.union(SubResult) 
+
+    return result
+
+test = GenerateSubstring({"v1":"425-706-7709"},"706")
+print(test)
+
+
+
+   """ def GenerateStr(entree,s): 
+       """ 
+        """ """
+
 
