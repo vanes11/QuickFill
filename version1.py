@@ -204,9 +204,10 @@ def GeneratePosition(s,k):
 
     return result,set(POsList)
          
-""" positions,poslist = GeneratePosition("425-706-7709",7)
+""" positions,poslist = GeneratePosition("425-706-7709",6)
+print(poslist)
 print(positions)
-print(poslist) """
+print(len(poslist)) """
 
 
 
@@ -215,6 +216,7 @@ def SubStr(s,p1,p2):
     """ 
     Expression de sous chaine tel que formuler dans l'article, un peu != de celle de python.l'indexation commence a 0
     """
+    # par la suite on utile la fonction substring de python a ajoutant a l'indice de fin
     p2 = p2+1
     return s[p1:p2]
 
@@ -238,8 +240,7 @@ def SubStrs(s,p1,p2):
     return set(SubList)
 
 
-""" x, test = SubStrs("425-706-7709",{"Pos(HyphenTok,NumTok,1)"},{"cpos(2)","Pos(NumTok, TokenSeq(HyphenTok,NumTok),2)"})
-print(x)
+""" test = SubStrs("425-706-7709",{"Pos(HyphenTok,NumTok,1)"},{"cpos(2)","Pos(NumTok, TokenSeq(HyphenTok,NumTok),2)"})
 print(test) """
 
 
@@ -263,24 +264,59 @@ def GenerateSubstring(entree,s):
             k1 = len(s)+k-1
             Y1 = GeneratePosition(entree[cle],k)
             Y1 = Y1[1] # je ne comprend pas pourquoi Y1 et Y2 sont des tuplets d'ensemble
-            print("valeur de Y1: ",Y1)
+            #print("valeur de Y1: ",Y1)
             Y2 = GeneratePosition(entree[cle], k1)
-            print("valeur de Y2: ",Y2[1])
+            #print("valeur de Y2: ",Y2[1])
             Y2 = Y2[1] # je ne comprend pas pourquoi Y1 et Y2 sont des tuplets d'ensemble
             SubResult = SubStrs(entree[cle],Y1,Y2) # le resultat de Substrs est deja un set
             
-            print("Result final: ",SubResult)
+            #print("Result final: ",SubResult)
             result = result.union(SubResult) 
 
     return result
 
-test = GenerateSubstring({"v1":"425-706-7709"},"706")
-print(test)
+""" test = GenerateSubstring({"v1":"425-706-7709"},"706")
+print(len(test)) """
 
 
+def  GenerateStr(entree, s):
+    """ 
+    cette fonction retourne  l'ensemble des facons d'obtenir s a partir del'etat d'entree sigma
+    elle retourne un dag, une structure de donnee qui permet de representer des grand ensemble
+    elle utilse le principe de l'algorithme CUK, base sur la programmation dynamique, qui consiste a reconnaitre un mot
+    dans un langage en passant  par sa table de transition.
+    """
 
-   """ def GenerateStr(entree,s): 
-       """ 
-        """ """
+    EtaTilda = set() # ensemble des noeuds du dag resultat
+    EtaSource = set([0]) 
+    EtaTarget = set([len(s)]) 
+    PsiTilda = set() #ensemble des aretes de notre dag
+    W = {} # table de transition, pour chaque arrete (i,j) associe l'etique qui est un ensemble d'expressions at0mique
+
+    for i in range(len(s)+1):
+        EtaTilda = EtaTarget.union(set([i])) 
+
+    for i in range(len(s)+1):
+        k = i+1
+        for j in range(k,len(s)+1):
+
+            PsiTilda = PsiTilda.union(set([(i,j)]))
+   
+    for i in PsiTilda:      
+        x = "ConstStr("+s[i[0]:i[1]]+")"
+        #print("valeur de x est :", x)
+        ConstString = set([x])
+        SubString = GenerateSubstring(entree,s[i[0]:i[1]])
+        #print("valeurs de SubString est : ",SubString)
+        ConstString = ConstString.union(SubString) 
+        W[i] = ConstString  
+    #print(W[(0,1)])
+    print(len(W[(0,3)]))
+    return 0 # retourne un dag
+
+#generatestring  = GenerateStr({"v1": "425-706-7709"}, "706")
+#print(generatestring)
+
+
 
 
