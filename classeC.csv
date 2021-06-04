@@ -17,6 +17,6 @@ RightParenthesisTok;\)
 LeftBracketTok;\{ 
 RightBraketTok;\}
 NonspaceTok;[^ \t\n\r\f\v]
-Epsilon;ϵ
+Epsilon;ε
 StartTok;^.{1,1}
 EndTok;.{1,1}$

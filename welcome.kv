@@ -1,0 +1,243 @@
+#:kivy 2.0.0
+<MyTile@SmartTile>
+    size_hint_y: None
+    height: "700dp"
+
+MDBoxLayout:
+    orientation: "vertical"
+
+    MDToolbar:
+        id: toolbar
+        title: "Strings Manipulation"
+        md_bg_color: 0, .5, .5, .5
+        specific_text_color: 1,1,1,.85
+        left_action_items: [["language-python"]]
+
+    MDBottomNavigation:
+        text_color_active: 0, .5, .5, .5
+        #id: panel
+
+        MDBottomNavigationItem:
+            name: "files1"
+            text: "LoadFile"
+            icon: 'google-spreadsheet'
+
+            FloatLayout:
+                #orientation:'horizontal'
+
+                MDRoundFlatIconButton:
+                    text: "Load data"
+                    icon:'file-upload'                  
+                    pos_hint: {"x": .005}   
+                    width: dp(160)
+                    on_release: app.file_manager_open()
+
+
+                MDRoundFlatIconButton:
+                    text: "Write data"
+                    icon:'typewriter'
+                    #custom_color: 0, .5, .5, .5
+                    pos_hint: {"x": .84}
+                    #text_color: 0, .5, .5, .5
+                    width: dp(160)
+
+
+        MDBottomNavigationItem:
+            name: "files2"
+            text: "Substring"
+            icon: 'code-string'
+            on_tab_release: app.PrintDataItem()
+
+           
+            MDDropDownItem:
+                id: dropdown_item
+                text: "Example 0"
+                current_item : "Example 0"
+                pos_hint: {'x': .025,'y': 0.85}
+                dropdown_bg: [1, 1, 1, 1]
+                width: dp(150)
+                on_release: app.menu.open()
+
+            MDRaisedButton:
+                pos_hint: { 'x': .03, 'y': 0.9}
+                text: 'Examples'
+                width: dp(155)
+                md_bg_color: 0, .5, .5, .5
+               
+
+            MDLabel:
+                id:montexte          
+                pos_hint: {'x': .025,"y": .2}   
+                width: dp(155)
+
+            MDLabel:
+                id:montextesortie          
+                pos_hint: {'x': .025,"y": .15}   
+                width: dp(155)
+
+            MDLabel:
+                id:longueur       
+                pos_hint: {'x': .025,"y": .10}   
+                width: dp(155) 
+
+
+            MDRoundFlatButton:
+                text: "Execute"            
+                pos_hint: {'x': .025,"y": .15}   
+                width: dp(155)
+                on_release: app. GenerateSubstring2(dropdown_item.current_item)
+
+            ScrollView:  
+                size_hint_y: 1
+                do_scroll_x: False
+                pos_hint: {'x': .2} 
+                GridLayout:
+                    id: scroll_vertical
+                    cols: 1
+                    size_hint: 1.0, None
+                    spacing: 40
+                    height: self.minimum_height
+                    MDList:
+                        id: box    
+
+                      
+
+                    
+        MDBottomNavigationItem:
+            name: "files3"
+            text: "Dag"
+            icon: 'graph'
+            on_tab_release: app.PrintDataItem2()
+
+
+            MDDropDownItem:
+                id: dropdown_item2
+                width: dp(150)
+                text: "Example 0"
+                current_item : "Example 0"
+                pos_hint: {'x': .025,'y': 0.85}
+                dropdown_bg: [1, 1, 1, 1]
+                on_release: app.menu2.open()
+
+            MDRaisedButton:
+                pos_hint: { 'x': .03, 'y': 0.9}
+                text: 'Examples'
+                width: dp(160)
+                md_bg_color: 0, .5, .5, .5
+               
+
+            MDRoundFlatButton:
+                text: "Execute"            
+                pos_hint: {'x': .025,"y": .15}   
+                width: dp(155)
+                on_release: app.PrintDag2(dropdown_item2.current_item)
+            
+            GridLayout:
+                pos_hint: {'x': .2} 
+                cols: 1
+                size_hint: 1.0, None
+                height: self.minimum_height
+                adaptive_height: True
+                Image:
+                    id:MyImageGenerateStr
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint_y: None
+                    size_hint_x: None
+                    width: self.parent.width
+                    height: self.parent.width/self.image_ratio
+                
+                    
+
+
+
+        MDBottomNavigationItem:
+            name: "files4"
+            text: "Partition"
+            icon: 'vector-intersection'
+            on_tab_release: app.GeneratePartition2()
+            #on_tab_release: app.PrintDataItem3()
+
+            MDDropDownItem:
+                id: dropdown_item3
+                width: dp(150)
+                text: "Sub Set 0"
+                current_item : "Sub Set 0"
+                pos_hint: {'x': .85,'y': 0.85}
+                dropdown_bg: [1, 1, 1, 1]
+                on_release: app.menu3.open()
+
+            MDRaisedButton:
+                pos_hint: { 'x': .85, 'y': 0.9}
+                text: 'Sub Set'
+                width: dp(160)
+                md_bg_color: 0, .5, .5, .5
+
+            MDLabel:
+                id:numPartition        
+                pos_hint: {'x': .85,"y": .15}   
+                width: dp(155)
+
+            MDRoundFlatButton:
+                text: "Execute"
+                width: dp(155)            
+                pos_hint: {'x': .85,"y": .15}   
+                width: dp(150)
+                on_release: app.PrintPartition(dropdown_item3.current_item)
+
+            MDLabel:
+                id:partition    
+            #pos_hint: {'x': .85,"y": .15}   
+            
+
+            
+
+
+        MDBottomNavigationItem:
+            name: "files5"
+            text: "classifiers"
+            icon: 'sort-bool-descending'
+            on_tab_release:  app.BoolClassifier()
+            
+
+            MDDropDownItem:
+                id: dropdown_item4
+                width: dp(150)
+                text: "Classifier 0"
+                current_item : "Classifier 0"
+                pos_hint: {'x': .85,'y': 0.85}
+                dropdown_bg: [1, 1, 1, 1]
+                on_release: app.menu4.open()
+
+            MDRaisedButton:
+                pos_hint: { 'x': .85, 'y': 0.9}
+                text: 'Classifier'
+                width: dp(155)
+                md_bg_color: 0, .5, .5, .5
+               
+            MDLabel:
+                id:numClassifier        
+                pos_hint: {'x': .85,"y": .15}   
+                width: dp(155)
+
+            MDRoundFlatButton:
+                text: "Execute" 
+                width: dp(155)           
+                pos_hint: {'x': .85,"y": .15}   
+                width: dp(150)
+                on_release: app.PrintClassifier(dropdown_item4.current_item)
+            
+            MDLabel:
+                id:classifier 
+
+
+        MDBottomNavigationItem:
+            name: "files6"
+            text: "Programs"
+            icon: 'switch'
+            on_tab_release : app.PrintStringProgramme()
+
+            MDLabel:
+                id:PrincipalProgram
+       
+           

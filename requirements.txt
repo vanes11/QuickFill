@@ -1,0 +1,4 @@
+pandas==0.25.1
+Kivy==2.0.0
+graphviz==0.16
+kivymd==0.104.1

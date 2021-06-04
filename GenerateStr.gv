@@ -1,0 +1,15 @@
+// Test
+digraph GenerateStr {
+	0 [label=0 color=Red]
+	1 [label=1]
+	2 [label=2]
+	3 [label=3 shape=doublecircle]
+	0 -> 1 [label="{SubStr(v0,Cpos(v0,-31),Cpos(v0,0))}"]
+	1 -> 2 [label="{SubStr(v0,Pos(TokenSeq(NonDigitTok),TokenSeq(AlphTok),-2),Pos(TokenSeq(AlphTok,NonDigitTok),TokenSeq(AlphTok),-2))}"]
+	1 -> 3 [label="{ConstStr(BM)}"]
+	2 -> 3 [label="{SubStr(v0,Pos(TokenSeq(AlphTok,NonDigitTok,AlphTok,NonDigitTok),TokenSeq(AlphTok),1),Pos(TokenSeq(AlphTok,NonDigitTok,AlphTok,NonDigitTok),TokenSeq(AlphTok),1))}"]
+	0 -> 3 [label="{ConstStr(IBM)}"]
+	0 -> 2 [label="{ConstStr(IB)}"]
+	label="entree_sigma = {'v0': 'International Business Machines'},s = IBM"
+	fontsize=25
+}
